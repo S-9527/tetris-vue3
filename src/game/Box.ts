@@ -11,3 +11,7 @@ export class Box {
         ];
     }
 }
+
+export function createBox() {
+    return new Box();
+}
