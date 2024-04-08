@@ -59,5 +59,7 @@ function handleKeydown(e: KeyboardEvent) {
         case "ArrowDown":
             speedUp();
             break;
+        case "ArrowUp":
+            activeBox.rotate();
     }
 }
