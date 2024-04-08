@@ -1,6 +1,7 @@
 import { Box } from "./Box.ts";
 
 export function render(box: Box, map: number[][]) {
+    if (!box) return;
     reset(map);
     _render(box, map);
 }

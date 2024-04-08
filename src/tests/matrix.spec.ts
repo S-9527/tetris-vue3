@@ -1,26 +1,34 @@
 import { it, describe, expect } from "vitest";
-import { getBottomRowPoints, rotate } from "../game/matrix.ts";
+import { getLeftPoints, getRightPoints, rotate } from "../game/matrix.ts";
 
-it("should return bottom points", () => {
-    const matrix = [
-        [1, 1],
-        [1, 1],
-    ];
+describe("获取边界点", () => {
+    it("获取 matrix 左侧的边界点", () => {
+        const matrix = [
+            [0, 0, 3],
+            [0, 3, 3],
+            [0, 3, 0],
+        ];
 
-    expect(getBottomRowPoints(matrix)).toEqual([
-        { x: 0, y: 1 },
-        { x: 1, y: 1 }
-    ]);
+        expect(getLeftPoints(matrix)).toEqual([
+            { x: 2, y: 0 },
+            { x: 1, y: 1 },
+            { x: 1, y: 2 },
+        ]);
+    });
 
-    const block = [
-        [1, 0, 0],
-        [1, 1, 0],
-        [0, 1, 0],
-    ];
+    it("获取 matrix 右侧的边界点", () => {
+        const matrix = [
+            [0, 0, 3],
+            [0, 3, 3],
+            [0, 3, 0],
+        ];
 
-    expect(getBottomRowPoints(block)).toEqual([
-        { x: 1, y: 2 }
-    ]);
+        expect(getRightPoints(matrix)).toEqual([
+            { x: 2, y: 0 },
+            { x: 2, y: 1 },
+            { x: 1, y: 2 },
+        ]);
+    });
 });
 
 describe("Rotate", () => {

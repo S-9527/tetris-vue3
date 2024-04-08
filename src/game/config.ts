@@ -1,18 +1,34 @@
-export const gameRow = 10;
+export const gameRow = 20;
 export const gameCol = 10;
-export let speed = {
+export const speed = {
     default: 1000,
     min: 100,
     factor: 0.9
 };
 
-export function speedUp() {
-    speed.default *= speed.factor;
-    if (speed.default <= speed.min) {
-        speed.default = speed.min;
+export class GameConfig {
+    _speed: number
+    constructor() {
+        this._speed = 0;
+        this.initSpeed();
     }
-}
 
-export function resetSpeed() {
-    speed.default = 1000;
+    initSpeed() {
+        this._speed = speed.default
+    }
+
+    speedUp() {
+        this._speed *= speed.factor
+        if (this._speed <= speed.min) {
+            this._speed = speed.min
+        }
+    }
+
+    resetSpeed() {
+        this.initSpeed();
+    }
+
+    get speed() {
+        return this._speed;
+    }
 }

@@ -5,6 +5,8 @@ export function initMap(map: number[][]) {
     for (let i = 0; i < gameRow; i++) {
         map.push(Array(gameCol).fill(0));
     }
+
+    return map;
 }
 
 export function addBoxToMap(box: Box, map: number[][]) {
@@ -33,4 +35,32 @@ export function eliminateLine(map: number[][]) {
         map.splice(n, 1);
         map.unshift(new Array(mapCol).fill(0));
     });
+}
+
+export function checkLegalPointInMap(point: { x: number; y: number }) {
+    const checkCol = point.x < 0 || point.x >= gameCol;
+    const checkRow = point.y < 0 || point.y >= gameRow;
+    return !checkCol && !checkRow;
+}
+
+export function checkLegalBoxInMap(box: Box, map: number[][]) {
+    const shape = box.shape;
+    const row = shape.length;
+    const col = shape[0].length;
+
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            const xx = box.x + j;
+            const yy = box.y + i;
+
+            if (!checkLegalPointInMap({ x: xx, y: yy })) return true;
+            if (isHardPoint({ row: yy, col: xx, map })) return true;
+        }
+    }
+
+    return false;
+}
+
+export function isHardPoint({ row, col, map }: { row: number; col: number; map: number[][] }) {
+    return map[row][col] < 0;
 }

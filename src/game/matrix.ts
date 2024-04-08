@@ -1,16 +1,64 @@
 export function getBottomRowPoints(matrix: number[][]) {
-    const points: any = [];
+    let points = [];
+    const col = matrix[0].length;
     const row = matrix.length;
-    matrix[row - 1].forEach((_, j) => {
-        if (matrix[row - 1][j] > 0) {
-            points.push({
-                x: j,
-                y: row - 1,
-            });
+    for (let i = 0; i < col; i++) {
+        for (let j = row - 1; j >= 0; j--) {
+            const point = matrix[j][i];
+            if (point) {
+                points.push({ x: i, y: j });
+                break;
+            }
         }
-    });
-
+    }
     return points;
+}
+
+export function getLeftPoints(matrix: number[][]) {
+    let points = [];
+    const col = matrix[0].length;
+    const row = matrix.length;
+    for (let i = 0; i < row; i++) {
+        for (let j = 0; j < col; j++) {
+            if (matrix[i][j]) {
+                points.push({
+                    x: j,
+                    y: i,
+                });
+                break;
+            }
+        }
+    }
+    return points;
+}
+
+export function getRightPoints(matrix: number[][]) {
+    let points = [];
+    const col = matrix[0].length;
+    const row = matrix.length;
+
+    for (let i = 0; i < row; i++) {
+        for (let j = col - 1; j >= 0; j--) {
+            if (matrix[i][j]) {
+                points.push({
+                    x: j,
+                    y: i,
+                });
+                break;
+            }
+        }
+    }
+    return points;
+}
+
+const mapFn: any = {
+    left: getLeftPoints,
+    right: getRightPoints,
+    bottom: getBottomRowPoints,
+};
+
+export function getPointsHandler(direction: any) {
+    return mapFn[direction];
 }
 
 export function rotate(matrix: number[][]) {

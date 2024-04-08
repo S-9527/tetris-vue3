@@ -1,7 +1,9 @@
 <template>
-  <div class="flex" v-for="row in gameRow" :key="row">
-    <div v-for="col in gameCol" :key="col">
-      <Box :type="map[row - 1][col - 1]"></Box>
+  <div class="h-screen flex flex-col justify-center items-center">
+    <div class="flex" v-for="row in gameRow" :key="row">
+      <div v-for="col in gameCol" :key="col">
+        <Box :type="map[row - 1][col - 1]"></Box>
+      </div>
     </div>
   </div>
 </template>

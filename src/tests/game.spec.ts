@@ -1,11 +1,11 @@
 import {it, expect, describe} from "vitest";
 import { Box } from "../game/Box.ts";
 import { render } from "../game/renderer.ts";
-import { moveDown } from "../game";
+import { Game } from "../game/Game.ts";
 
 describe("map", () => {
     it("should render", () => {
-        const box = new Box(1,2);
+        const box = new Box();
         const map = [
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
@@ -17,10 +17,10 @@ describe("map", () => {
         render(box, map);
 
         expect(map).toEqual([
+            [1, 1, 0, 0, 0],
+            [1, 1, 0, 0, 0],
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
-            [0, 1, 1, 0, 0],
-            [0, 1, 1, 0, 0],
             [0, 0, 0, 0, 0],
         ])
     })
@@ -41,16 +41,16 @@ describe("map", () => {
         ];
 
         box.y = 0;
+        const game = new Game(box, map);
 
-        moveDown(box, map);
+        game.moveBoxToDown();
         expect(box.y).toBe(1);
 
-        moveDown(box, map);
+        game.moveBoxToDown();
         expect(box.y).toBe(2);
 
-        moveDown(box, map);
+        game.moveBoxToDown();
         expect(box.y).toBe(2);
-
         expect(map).toEqual([
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
@@ -74,7 +74,9 @@ describe("map", () => {
         ];
         box.y = 0;
 
-        moveDown(box, map);
+        const game = new Game(box, map);
+
+        game.moveBoxToDown();
         expect(box.y).toBe(0);
         expect(map).toEqual([
             [-1, -1, 0, 0, 0],
@@ -101,9 +103,11 @@ describe("map", () => {
         ];
         box.y = 0;
 
-        moveDown(box, map);
+        const game = new Game(box, map);
+
+        game.moveBoxToDown();
         expect(box.y).toBe(1);
-        moveDown(box, map);
+        game.moveBoxToDown();
         expect(box.y).toBe(1);
         expect(map).toEqual([
             [0, 0, 0, 0, 0],
@@ -129,7 +133,9 @@ describe("map", () => {
         ];
         box.y = 2;
 
-        moveDown(box, map);
+        const game = new Game(box, map);
+
+        game.moveBoxToDown();
         expect(map).toEqual([
             [0, 0, 0, 0],
             [0, 0, 0, 0],
