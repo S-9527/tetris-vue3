@@ -30,6 +30,41 @@ describe("map", () => {
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ];
+
+        const box = new Box();
+        box.shape = [
+            [1, 0, 0],
+            [1, 1, 0],
+            [0, 1, 0],
+        ];
+
+        box.y = 0;
+
+        moveDown(box, map);
+        expect(box.y).toBe(1);
+
+        moveDown(box, map);
+        expect(box.y).toBe(2);
+
+        moveDown(box, map);
+        expect(box.y).toBe(2);
+
+        expect(map).toEqual([
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [-1, 0, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+            [0, -1, 0, 0, 0],
+        ]);
+    });
+    it("moveDown when hit other box", () => {
+        const map = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
         ];
 
         const box = new Box();
@@ -37,11 +72,46 @@ describe("map", () => {
             [1, 1],
             [1, 1],
         ];
+        box.y = 0;
+
+        moveDown(box, map);
+        expect(box.y).toBe(0);
+        expect(map).toEqual([
+            [-1, -1, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+        ]);
+    });
+    it("moveDown when box shape is not full", () => {
+        const map = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [-1, 0, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+            [0, -1, 0, 0, 0],
+        ];
+
+        const box = new Box();
+        box.shape = [
+            [1, 0, 0],
+            [1, 1, 0],
+            [0, 1, 0],
+        ];
+        box.y = 0;
 
         moveDown(box, map);
         expect(box.y).toBe(1);
-
         moveDown(box, map);
-        expect(box.y).toBe(2);
+        expect(box.y).toBe(1);
+        expect(map).toEqual([
+            [0, 0, 0, 0, 0],
+            [-1, 0, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+            [-1, -1, 0, 0, 0],
+            [0, -1, 0, 0, 0],
+        ]);
     });
 })

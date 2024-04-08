@@ -12,6 +12,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const typeToColorMap: Record<number, string> = {
+  [-1]: 'red',
   [0]: 'gray',
   [1]: 'red',
 }

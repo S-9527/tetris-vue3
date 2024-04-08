@@ -1,5 +1,5 @@
-import { gameCol, gameRow, resetSpeed, speedUp } from "../game";
-import { Box, createBox } from "./Box.ts";
+import { gameCol, gameRow } from "../game";
+import { Box } from "./Box.ts";
 
 export function initMap(map: number[][]) {
     for (let i = 0; i < gameRow; i++) {
@@ -7,37 +7,15 @@ export function initMap(map: number[][]) {
     }
 }
 
-keyboard()
+export function addBoxToMap(box: Box, map: number[][]) {
+    for (let i = 0; i < box.shape.length; i++) {
+        for (let j = 0; j < box.shape[0].length; j++) {
+            const row = box.y + i;
+            const col = box.x + j;
 
-let activeBox: Box | null = null;
-
-export function keyboard() {
-    window.addEventListener("keyup", handleKeyup);
-    window.addEventListener("keydown", handleKeydown);
-}
-function handleKeyup(e: KeyboardEvent) {
-    if (e.code === "ArrowDown") {
-        resetSpeed();
+            if (box.shape[i][j] > 0) {
+                map[row][col] = -1;
+            }
+        }
     }
-}
-
-function handleKeydown(e: KeyboardEvent) {
-    if (!activeBox) return;
-    switch (e.code) {
-        case "ArrowLeft":
-            activeBox.x--;
-            break;
-        case "ArrowRight":
-            activeBox.x++;
-            break;
-        case "ArrowDown":
-            speedUp();
-            break;
-    }
-}
-
-export function addBox() {
-    const box = createBox();
-    activeBox = box;
-    return box;
 }
