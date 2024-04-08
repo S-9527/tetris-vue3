@@ -114,4 +114,27 @@ describe("map", () => {
             [0, -1, 0, 0, 0],
         ]);
     });
+    it("eliminate line", () => {
+        const map = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, -1, -1],
+        ];
+
+        const box = new Box();
+        box.shape = [
+            [1, 1],
+            [1, 1],
+        ];
+        box.y = 2;
+
+        moveDown(box, map);
+        expect(map).toEqual([
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [-1, -1, 0, 0],
+        ]);
+    })
 })

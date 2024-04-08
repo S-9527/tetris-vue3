@@ -1,4 +1,4 @@
-import { addBoxToMap, initMap } from "./map.ts";
+import {addBoxToMap, eliminateLine, initMap} from "./map.ts";
 import { Box, createBox } from "./Box.ts";
 import { render } from "./renderer.ts";
 import { addTicker } from "./ticker.ts";
@@ -26,6 +26,7 @@ export function startGame(map: number[][]) {
 export function moveDown(box: Box, map: number[][]) {
     if (hitBottomBoundary(box, map) || hitBottomBox(box, map)) {
         addBoxToMap(box, map);
+        eliminateLine(map);
         activeBox = createBox();
         return;
     }

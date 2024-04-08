@@ -19,3 +19,18 @@ export function addBoxToMap(box: Box, map: number[][]) {
         }
     }
 }
+
+export function eliminateLine(map: number[][]) {
+    let lines: Array<number> = [];
+    map.forEach((arr, i) => {
+        const boo = arr.every(v => v === -1);
+        if (boo) lines.push(i);
+    })
+
+    const mapCol = map[0].length;
+
+    lines.forEach((n) => {
+        map.splice(n, 1);
+        map.unshift(new Array(mapCol).fill(0));
+    });
+}
