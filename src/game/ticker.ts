@@ -15,3 +15,7 @@ const tickers: Array<Ticker> = [];
 export function addTicker(ticker: Ticker) {
     tickers.push(ticker);
 }
+
+export function removeTicker(ticker: Ticker) {
+    tickers.splice(tickers.indexOf(ticker), 1);
+}

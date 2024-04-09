@@ -51,13 +51,13 @@ export function getRightPoints(matrix: number[][]) {
     return points;
 }
 
-const mapFn: any = {
+const mapFn: Record<string, Function> = {
     left: getLeftPoints,
     right: getRightPoints,
     bottom: getBottomRowPoints,
 };
 
-export function getPointsHandler(direction: any) {
+export function getPointsHandler(direction: string) {
     return mapFn[direction];
 }
 

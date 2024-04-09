@@ -10,15 +10,16 @@ export class Player {
 
     init() {
         this.initKeyboard();
+        this._game.addBox();
+    }
+
+    createBoxStrategy() {
+        return createBox();
     }
 
     initKeyboard() {
         window.addEventListener("keyup", this.handleKeyup.bind(this));
         window.addEventListener("keydown", this.handleKeydown.bind(this));
-    }
-
-    createBoxStrategy() {
-        return createBox();
     }
 
     handleKeyup(e: KeyboardEvent) {
@@ -40,6 +41,7 @@ export class Player {
                 break;
             case "ArrowDown":
                 this._game.speedUp();
+                break;
         }
     }
 }

@@ -1,26 +1,31 @@
 import { rotate } from "./matrix.ts";
 
 export class Box {
-    shape: number[][];
-    x: number;
-    y: number;
-    type: number;
+    private _shape: number[][];
+    private _x: number;
+    private _y: number;
+    private _type: number;
     private _rotateStrategy: any[] = [];
     private _rotateIndex = 0;
     constructor(type: number = 0) {
-        this.x = 0;
-        this.y = 0;
-        this.type = type;
-        this.shape = [
+        this._x = 0;
+        this._y = 0;
+        this._type = type;
+        this._shape = [
             [1, 1],
             [1, 1],
         ];
     }
 
+    setRotateStrategy(strategy: any) {
+        if (!strategy) return
+        this._rotateStrategy = strategy;
+    }
+
     rotate() {
         const rotateHandler: Function = this._rotateStrategy[this._rotateIndex];
         if (!rotateHandler) return;
-        this.shape = rotateHandler(this.shape);
+        this._shape = rotateHandler(this._shape);
         this._rotateIndex = this.nextRotateIndex();
     }
 
@@ -33,9 +38,36 @@ export class Box {
         return this._rotateIndex;
     }
 
-    setRotateStrategy(strategy: any) {
-        if (!strategy) return
-        this._rotateStrategy = strategy;
+    get x(): number {
+        return this._x;
+    }
+
+    set x(value: number) {
+        this._x = value;
+    }
+
+    get y(): number {
+        return this._y;
+    }
+
+    set y(value: number) {
+        this._y = value;
+    }
+
+    get type(): number {
+        return this._type;
+    }
+
+    set type(value: number) {
+        this._type = value;
+    }
+
+    get shape(): number[][] {
+        return this._shape;
+    }
+
+    set shape(value: number[][]) {
+        this._shape = value;
     }
 }
 

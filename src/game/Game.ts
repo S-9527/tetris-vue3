@@ -1,21 +1,21 @@
 import { Box, createBox } from "./Box.ts";
 import { render } from "./renderer.ts";
-import {hitBottomBoundary, hitBottomBox, hitLeftBoundary, hitLeftBox, hitRightBoundary, hitRightBox} from "./hit.ts";
-import {addBoxToMap, checkLegalBoxInMap, eliminateLine} from "./map.ts";
+import { hitBottomBoundary, hitBottomBox, hitLeftBoundary, hitLeftBox, hitRightBoundary, hitRightBox} from "./hit.ts";
+import { addBoxToMap, checkLegalBoxInMap, eliminateLine, initMap } from "./map.ts";
 import { GameConfig } from "./config.ts";
 import { Player} from "./Player.ts";
-import { addTicker }  from "./ticker.ts";
+import { addTicker, removeTicker } from "./ticker.ts";
 
 export class Game {
     private readonly _map: number[][];
     private _activeBox: Box;
     private readonly _autoMoveToDown: boolean;
-    private _createBoxStrategy: any;
+    private _createBoxStrategy: OmitThisParameter<() => Box>;
     private _config: GameConfig;
 
-    constructor(box: Box, map: number[][]) {
-        this._map = map;
-        this._activeBox = box;
+    constructor(map: number[][]) {
+        this._map = initMap(map);
+        this._activeBox = createBox();
         this._autoMoveToDown = true;
         this._createBoxStrategy = createBox;
         this._config = new GameConfig();
@@ -36,10 +36,6 @@ export class Game {
         render(this._activeBox, this._map);
     }
 
-    getSpeed() {
-        return this._config.speed;
-    }
-
     _n = 0;
     handleAutoMoveToDown(i: number) {
         if (!this._autoMoveToDown) return;
@@ -48,6 +44,10 @@ export class Game {
             this._n = 0;
             this.moveBoxToDown();
         }
+    }
+
+    getSpeed() {
+        return this._config.speed;
     }
 
     resetSpeed() {
@@ -94,8 +94,17 @@ export class Game {
     nextBox(activeBox: Box) {
         addBoxToMap(activeBox, this._map);
         eliminateLine(this._map);
-        if (this._activeBox.y <= 0) return;
+        if (this._activeBox.y <= 0) {
+            this.endGame()
+            return;
+        }
+
         this.addBox();
+    }
+
+    endGame() {
+        alert("game over");
+        removeTicker(this.handleTicker.bind(this));
     }
 
     addBox() {

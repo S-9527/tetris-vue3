@@ -2,8 +2,8 @@ export const gameRow = 20;
 export const gameCol = 10;
 export const speed = {
     default: 1000,
-    min: 100,
-    factor: 0.9
+    min: 30,
+    factor: 0.6
 };
 
 export class GameConfig {
