@@ -1,5 +1,5 @@
 <template>
-  <div class="size-5 m-0.5" :style="{ backgroundColor: color }">{{ type }}</div>
+  <div class="size-5 m-0.5" :style="{ backgroundColor: color }"></div>
 </template>
 
 <script setup lang="ts">

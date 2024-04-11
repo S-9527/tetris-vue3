@@ -12,6 +12,7 @@ export class Game {
     private readonly _autoMoveToDown: boolean;
     private _createBoxStrategy: OmitThisParameter<() => Box>;
     private _config: GameConfig;
+    private _player: Player
 
     constructor(map: number[][]) {
         this._map = initMap(map);
@@ -19,11 +20,11 @@ export class Game {
         this._autoMoveToDown = true;
         this._createBoxStrategy = createBox;
         this._config = new GameConfig();
+        this._player = new Player(this)
     }
 
     start() {
-        const player = new Player(this);
-        player.init();
+        this._player.init();
         addTicker(this.handleTicker.bind(this));
     }
 
@@ -72,11 +73,13 @@ export class Game {
 
     moveBoxToLeft() {
         if (hitLeftBoundary(this._activeBox, this._map) || hitLeftBox(this._activeBox, this._map)) return;
+        if (this.isGameOver()) return;
         this._activeBox.x--;
     }
 
     moveBoxToRight() {
         if (hitRightBoundary(this._activeBox, this._map) || hitRightBox(this._activeBox, this._map)) return;
+        if (this.isGameOver()) return;
         this._activeBox.x++;
     }
 
@@ -94,8 +97,9 @@ export class Game {
     nextBox(activeBox: Box) {
         addBoxToMap(activeBox, this._map);
         eliminateLine(this._map);
-        if (this._activeBox.y <= 0) {
-            this.endGame()
+
+        if (this.isGameOver()) {
+            this.endGame();
             return;
         }
 
@@ -107,7 +111,12 @@ export class Game {
         removeTicker(this.handleTicker.bind(this));
     }
 
+    isGameOver() {
+        return this._activeBox.y <= 0;
+    }
+
     addBox() {
+        if (this.isGameOver()) return;
         this._activeBox = this._createBoxStrategy();
     }
 }
