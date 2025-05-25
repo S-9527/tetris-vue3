@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-900 text-white;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
+@layer components {
+  .tetris-cell {
+    @apply w-8 h-8 border border-gray-800 rounded-sm transition-all duration-150;
+  }
+  
+  .tetris-cell-filled {
+    @apply shadow-lg;
+  }
+  
+  .tetris-cell-ghost {
+    @apply opacity-30 border border-dashed border-white;
+  }
+  
+  .game-container {
+    @apply bg-gray-800 rounded-lg p-4 shadow-xl border border-gray-700;
+  }
+  
+  .game-panel {
+    @apply bg-gray-800 rounded-lg p-4 shadow-lg border border-gray-700 flex flex-col;
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  }
+  
+  .glow-border {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
